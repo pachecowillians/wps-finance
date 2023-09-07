@@ -346,11 +346,11 @@ def formatar_numeros(valor):
     return valor
 
 if opcao == 'Total':
-    rendimentos_totais = rendimentos_totais.applymap(formatar_numeros)
+    rendimentos_totais = rendimentos_totais.map(formatar_numeros)
     st.table(rendimentos_totais.set_index(rendimentos_totais.columns[0]))
 elif opcao == 'Inter':
-    rendimentos_totais_inter = rendimentos_totais_inter.applymap(formatar_numeros)
+    rendimentos_totais_inter = rendimentos_totais_inter.map(formatar_numeros)
     st.table(rendimentos_totais_inter.set_index(rendimentos_totais.columns[0]))
 elif opcao == 'Nubank':
-    rendimentos_totais_nubank = rendimentos_totais_nubank.applymap(formatar_numeros)
+    rendimentos_totais_nubank = rendimentos_totais_nubank.map(formatar_numeros)
     st.table(rendimentos_totais_nubank.set_index(rendimentos_totais.columns[0]))
