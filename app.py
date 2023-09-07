@@ -28,10 +28,7 @@ def generate_dates(data_inicio, dias=30):
     data_final = data_atual + timedelta(days=dias)
 
     lista_de_datas = []
-    data_atual = datetime.strptime(data_inicio, '%d/%m/%Y')  # Converte a string data_inicio para um objeto datetime
-
-    print(type(data_atual))
-    print(type(data_final))
+    data_atual = datetime.strptime(data_inicio, '%d/%m/%Y')
 
     while data_atual <= data_final:
         lista_de_datas.append(data_atual)
@@ -104,7 +101,6 @@ def calcular_dias_corridos(data_inicio, data_fim, bank):
 
     return dias_corridos - 1 if bank == 'Inter' else dias_corridos
 
-# contributions = pd.read_csv('investimentos.csv', parse_dates=['Date'], dayfirst=True)
 cdi_df = pd.read_csv('./data/cdi.csv', parse_dates=['Date'], dayfirst=True)
 iof_df = pd.read_csv('./data/iof.csv')
 
@@ -182,8 +178,6 @@ for _, contribution in contributions.iterrows():
         'Rendimento líquido': rendimento_liquido_list
     })
 
-    # contribution_trough_time.to_csv(f"./investimentos/{contribution['Id']}.csv", index=False)
-
     today = datetime.now().date()
 
     rendimentos = pd.concat([rendimentos, contribution_trough_time.query("Data == @today")], axis=0)
@@ -256,9 +250,6 @@ rendimentos_totais_nubank = rendimentos_totais_nubank[['Data', 'Valor Investido'
 
 today = datetime.now().date()
 
-print(rendimentos_totais_inter.query("Data == @today"))
-print(rendimentos_totais_nubank.query("Data == @today"))
-
 rendimentos_totais = rendimentos_totais_inter.copy()
     
 for i in range(len(rendimentos)):
@@ -305,19 +296,10 @@ rendimentos_totais = rendimentos_totais.round({
     'Rendimento líquido': 2
 })
 
-print(rendimentos_totais.query("Data == @today"))
-
-# rendimentos_totais_inter.to_csv(f"./rendimentos/inter.csv", index=False)
-# rendimentos_totais_nubank.to_csv(f"./rendimentos/nubank.csv", index=False)
-# rendimentos_totais.to_csv(f"./rendimentos/total.csv", index=False)
-
 locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
-
-# Crie três colunas
 col1, col2, col3 = st.columns(3)
 
-# Adicione texto em cada coluna
 with col1:
     sl = rendimentos_totais.query("Data == @today").iloc[0]['Saldo líquido']
     rl = rendimentos_totais.query("Data == @today").iloc[0]['Rendimento líquido']
