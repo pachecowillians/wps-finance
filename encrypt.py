@@ -3,6 +3,8 @@ import pandas as pd
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.backends import default_backend
 import base64
+import streamlit as st
+
 
 def generate_fernet_key_from_text(text):
     text_bytes = text.encode('utf-8')
@@ -18,7 +20,7 @@ def encrypt_data(data, key):
 file_path = "./data/investimentos.csv"
 df = pd.read_csv(file_path)
 
-key = input("Digite sua chave de criptografia: ")
+key = st.secrets["encryption_credentials"]["crypto_key"]
 
 key = generate_fernet_key_from_text(key)
 
