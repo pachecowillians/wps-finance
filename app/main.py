@@ -18,6 +18,13 @@ def login():
     _, col2, _ = st.columns(3)
     if "authenticated" not in st.session_state:
         with col2:
+            _, c2, _ = st.columns(3)
+
+            with c2:
+                st.image("./img/logo.png", use_column_width=True)
+
+            st.write("<br>", unsafe_allow_html=True)
+
             st.title("Login")
             st.text_input("Digite a senha:", type="password", key="password", on_change=on_change)
         return False
@@ -26,6 +33,13 @@ def login():
             return True
         else:
             with col2:
+                _, c2, _ = st.columns(3)
+
+                with c2:
+                    st.image("./img/logo.png", use_column_width=True)
+
+                st.write("<br>", unsafe_allow_html=True)
+
                 st.title("Login")
                 st.text_input("Digite a senha:", type="password", key="password", on_change=on_change)
             return False
