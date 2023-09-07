@@ -24,7 +24,7 @@ st.title("WPS - Finance")
 with open("./encrypted_files/investimentos.txt", "rb") as encrypted_file:
     loaded_encrypted_data = encrypted_file.read()
 
-key = "teste"
+key = st.secrets["encryption_credentials"]["crypto_key"]
 
 key = generate_fernet_key_from_text(key)
 
