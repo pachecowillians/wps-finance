@@ -16,8 +16,6 @@ def encrypt_data(data, key):
     encrypted_data = f.encrypt(data.encode())
     return encrypted_data
 
-st.title("WPS - Finance")
-
 file_path = "./data/investimentos.csv"
 df = pd.read_csv(file_path)
 
@@ -28,3 +26,5 @@ encrypted_data = encrypt_data(df.to_csv(index=False), key)
 
 with open("./encrypted_files/investimentos.txt", "wb") as encrypted_file:
     encrypted_file.write(encrypted_data)
+
+print(Fernet.generate_key())
