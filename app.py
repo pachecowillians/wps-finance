@@ -14,4 +14,6 @@ def decrypt_data(encrypted_data, key):
     decrypted_data = f.decrypt(encrypted_data).decode()
     return decrypted_data
 
+st.title("WPS - Finance")
+
 st.text(generate_key())
