@@ -18,6 +18,8 @@ def login():
     _, col2, _ = st.columns(3)
     if "authenticated" not in st.session_state:
         with col2:
+            st.write("<br>", unsafe_allow_html=True)
+
             _, c2, _ = st.columns(3)
 
             with c2:
@@ -33,6 +35,8 @@ def login():
             return True
         else:
             with col2:
+                st.write("<br>", unsafe_allow_html=True)
+
                 _, c2, _ = st.columns(3)
 
                 with c2:
