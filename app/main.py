@@ -3,7 +3,7 @@ import locale
 from modules.data_loader import DataLoader
 from modules.investment_calculator import InvestmentCalculator
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime
 
 def main():
     # Configuração inicial do Streamlit
