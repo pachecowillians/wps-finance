@@ -334,7 +334,7 @@ col1, col2, col3 = st.columns(3)
 opcao = 'Total'
 
 with col2:
-    opcao = st.selectbox('', ['Total', 'Inter', 'Nubank'])
+    opcao = st.selectbox('Selecione a conta', ['Total', 'Inter', 'Nubank'])
 
 st.write("<br>", unsafe_allow_html=True)
 
