@@ -1,13 +1,13 @@
-# app/investment_calculator.py
 from datetime import datetime, timedelta
 import numpy as np
 import math
 import pandas as pd
 
 class InvestmentCalculator:
-    def generate_dates(data_inicio, dias=30):
-        data_atual = datetime.now()
-        data_final = data_atual + timedelta(days=dias)
+
+    def generate_dates(self, data_inicio, dias=30):
+        hoje = datetime.now()
+        data_final = hoje + timedelta(days=dias)
 
         lista_de_datas = []
         data_atual = datetime.strptime(data_inicio, '%d/%m/%Y')
@@ -18,8 +18,7 @@ class InvestmentCalculator:
 
         return lista_de_datas
 
-
-    def get_cdi(data_desejada, cdi_df):
+    def get_cdi(self, data_desejada, cdi_df):
         resultado_filtrado = cdi_df[cdi_df['Date'] <= data_desejada]
 
         if not resultado_filtrado.empty:
@@ -28,14 +27,14 @@ class InvestmentCalculator:
         else:
             return None
 
-    def get_iof(day, iof_df):
+    def get_iof(self, day, iof_df):
         try:
             valor_iof = iof_df.query("Day == @day").iloc[0]['Value']
             return valor_iof
         except IndexError:
             return None
 
-    def get_ir(numero_dias):
+    def get_ir(self, numero_dias):
         if numero_dias <= 180:
             return 0.225
         elif 181 <= numero_dias <= 360:
@@ -45,7 +44,7 @@ class InvestmentCalculator:
         else:
             return 0.150
 
-    def calcular_dias_uteis(data_inicio, data_fim):
+    def calcular_dias_uteis(self, data_inicio, data_fim):
         dias_uteis = 0
 
         if data_inicio == data_fim:
@@ -59,7 +58,7 @@ class InvestmentCalculator:
 
         return dias_uteis
 
-    def calcular_dias_corridos(data_inicio, data_fim, bank):
+    def calcular_dias_corridos(self, data_inicio, data_fim, bank):
         dias_corridos = 0
 
         if data_inicio == data_fim:
@@ -231,8 +230,6 @@ class InvestmentCalculator:
         rendimentos_totais_inter = rendimentos_totais_inter[['Data', 'Valor Investido', 'Saldo Bruto', 'Rendimento', 'IOF Valor', 'IR Valor', 'Imposto', 'Saldo líquido', "Rendimento líquido"]]
         rendimentos_totais_nubank = rendimentos_totais_nubank[['Data', 'Valor Investido', 'Saldo Bruto', 'Rendimento', 'IOF Valor', 'IR Valor', 'Imposto', 'Saldo líquido', "Rendimento líquido"]]
 
-        today = datetime.now().date()
-
         rendimentos_totais = rendimentos_totais_inter.copy()
             
         for i in range(len(rendimentos)):
@@ -278,3 +275,5 @@ class InvestmentCalculator:
             'Saldo líquido': 2,
             'Rendimento líquido': 2
         })
+
+        return rendimentos_totais, rendimentos_totais_inter, rendimentos_totais_nubank

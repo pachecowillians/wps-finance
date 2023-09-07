@@ -1,6 +1,6 @@
 import io
 import pandas as pd
-from crypto_utils import CryptoUtils
+from .crypto_utils import CryptoUtils
 
 class DataLoader:
     def __init__(self, encrypted_file_path):
