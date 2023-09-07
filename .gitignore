@@ -160,7 +160,7 @@ cython_debug/
 #.idea/
 
 # Ignoring CSV files
-*.csv
+investimentos.csv
 
 # Streamlit
 *.streamlit
