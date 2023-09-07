@@ -1,5 +1,6 @@
 import streamlit as st
 from cryptography.fernet import Fernet
+import pandas as pd
 
 def generate_key():
     return Fernet.generate_key()
@@ -17,3 +18,9 @@ def decrypt_data(encrypted_data, key):
 st.title("WPS - Finance")
 
 st.text(generate_key())
+
+file_path = "./data/investimentos.csv"  # Substitua com o nome do seu arquivo CSV
+df = pd.read_csv(file_path)
+
+# Mostre o DataFrame lido
+st.write(df)
