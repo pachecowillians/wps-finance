@@ -17,10 +17,25 @@ def decrypt_data(encrypted_data, key):
 
 st.title("WPS - Finance")
 
-st.text(generate_key())
-
 file_path = "./data/investimentos.csv"  # Substitua com o nome do seu arquivo CSV
 df = pd.read_csv(file_path)
 
 # Mostre o DataFrame lido
 st.write(df)
+
+key = generate_key()
+
+st.text(key)
+
+encrypted_data = encrypt_data(df.to_csv(index=False), key)
+
+# Mostra os dados criptografados
+st.text("Dados Criptografados:")
+st.text(encrypted_data)
+
+# Descriptografa os dados
+decrypted_data = decrypt_data(encrypted_data, key)
+
+# Mostra os dados descriptografados
+st.text("Dados Descriptografados:")
+st.text(decrypted_data)
