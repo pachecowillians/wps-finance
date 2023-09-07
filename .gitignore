@@ -163,4 +163,4 @@ cython_debug/
 investimentos.csv
 
 # Streamlit
-*.streamlit
+secrets.toml
