@@ -55,17 +55,13 @@ def main():
 
         timezone_brasil = pytz.timezone('America/Sao_Paulo')
 
-        # Configuração inicial do Streamlit
         locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
-        # Carrega a chave de criptografia diretamente do Streamlit Secrets
         crypto_key = st.secrets["encryption_credentials"]["crypto_key"]
 
-        # Crie instâncias das classes relevantes
         data_loader = DataLoader("./encrypted_files/investimentos.txt")
         investment_calculator = InvestmentCalculator()
 
-        # Decifra os dados
         contributions = data_loader.decrypt_and_load_data(crypto_key)
 
         rendimentos_totais, rendimentos_totais_inter, rendimentos_totais_nubank = investment_calculator.calcular_rendimentos(contributions)
