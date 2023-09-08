@@ -55,7 +55,6 @@ def main():
 
         timezone_brasil = pytz.timezone('America/Sao_Paulo')
 
-        st.write(datetime.now(timezone_brasil))
         # Configuração inicial do Streamlit
         locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
