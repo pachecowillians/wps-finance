@@ -52,6 +52,7 @@ def main():
     st.set_page_config(layout='wide')
     if login():
 
+        st.write(datetime.now())
         # Configuração inicial do Streamlit
         locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
