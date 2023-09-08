@@ -2,17 +2,20 @@ from datetime import datetime, timedelta
 import numpy as np
 import math
 import pandas as pd
+import pytz
 
 class InvestmentCalculator:
 
     def generate_dates(self, data_inicio, dias=30):
-        hoje = datetime.now()
+        timezone_brasil = pytz.timezone('America/Sao_Paulo')
+
+        hoje = datetime.now(timezone_brasil)
         data_final = hoje + timedelta(days=dias)
 
         lista_de_datas = []
         data_atual = datetime.strptime(data_inicio, '%d/%m/%Y')
 
-        while data_atual <= data_final:
+        while data_atual.astimezone(None) <= data_final.astimezone(None):
             lista_de_datas.append(data_atual)
             data_atual += timedelta(days=1)
 
@@ -160,7 +163,9 @@ class InvestmentCalculator:
                 'Rendimento líquido': rendimento_liquido_list
             })
 
-            today = datetime.now().date()
+            timezone_brasil = pytz.timezone('America/Sao_Paulo')
+
+            today = datetime.now(timezone_brasil).date()
 
             rendimentos = pd.concat([rendimentos, contribution_trough_time.query("Data == @today")], axis=0)
 

@@ -4,6 +4,7 @@ from modules.data_loader import DataLoader
 from modules.investment_calculator import InvestmentCalculator
 import pandas as pd
 from datetime import datetime
+import pytz
 
 def on_change():
     if st.session_state["password"] == st.secrets["login_credentials"]["password"]:
@@ -52,7 +53,9 @@ def main():
     st.set_page_config(layout='wide')
     if login():
 
-        st.write(datetime.now())
+        timezone_brasil = pytz.timezone('America/Sao_Paulo')
+
+        st.write(datetime.now(timezone_brasil))
         # Configuração inicial do Streamlit
         locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
@@ -68,7 +71,7 @@ def main():
 
         rendimentos_totais, rendimentos_totais_inter, rendimentos_totais_nubank = investment_calculator.calcular_rendimentos(contributions)
 
-        today = datetime.now().date()
+        today = datetime.now(timezone_brasil).date()
 
         locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
