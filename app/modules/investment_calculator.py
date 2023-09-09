@@ -93,6 +93,7 @@ class InvestmentCalculator:
 
         rendimentos_inter_list = []
         rendimentos_nubank_list = []
+        rendimentos_neon_list = []
 
         for _, contribution in contributions.iterrows():
 
@@ -173,6 +174,8 @@ class InvestmentCalculator:
 
             if contribution['Bank'] == 'Inter':
                 rendimentos_inter_list.append(contribution_trough_time)
+            elif contribution['Bank'] == 'Neon':
+                rendimentos_neon_list.append(contribution_trough_time)
             else:
                 rendimentos_nubank_list.append(contribution_trough_time)
 
@@ -232,8 +235,38 @@ class InvestmentCalculator:
                 rendimentos_totais_nubank.loc[rendimentos_totais_nubank.index[idx], 'Saldo líquido'] += rendimentos.iloc[idx]['Saldo líquido']
                 rendimentos_totais_nubank.loc[rendimentos_totais_nubank.index[idx], 'Rendimento líquido'] += rendimentos.iloc[idx]['Rendimento líquido']
 
+        rendimentos_totais_neon = rendimentos_neon_list[0].copy()
+        rendimentos_totais_neon['Valor Investido'] = rendimentos_totais_neon.iloc[0]['Saldo Bruto']
+        rendimentos_totais_neon = rendimentos_totais_neon.round({
+            'Valor Investido': 2,
+            'Saldo Bruto': 2,
+            'Rendimento': 2,
+            'IOF Valor': 2,
+            'IR Valor': 2,
+            'Imposto': 2,
+            'Saldo líquido': 2,
+            'Rendimento líquido': 2
+        })
+
+        for rendimentos in rendimentos_neon_list[1:]:
+
+            rendimentos[['Saldo Bruto', 'Rendimento', 'IOF Valor', 'IR Valor', 'Imposto', 'Saldo líquido', 'Rendimento líquido']] = rendimentos[['Saldo Bruto', 'Rendimento', 'IOF Valor', 'IR Valor', 'Imposto', 'Saldo líquido', 'Rendimento líquido']].round(2)
+            
+            for i in range(len(rendimentos)):
+                idx = -(i+1)
+                rendimentos_totais_neon.loc[rendimentos_totais_neon.index[idx], 'Valor Investido'] += rendimentos.iloc[0]['Saldo Bruto']
+                rendimentos_totais_neon.loc[rendimentos_totais_neon.index[idx], 'Saldo Bruto'] += rendimentos.iloc[idx]['Saldo Bruto']
+                rendimentos_totais_neon.loc[rendimentos_totais_neon.index[idx], 'Rendimento'] += rendimentos.iloc[idx]['Rendimento']
+                rendimentos_totais_neon.loc[rendimentos_totais_neon.index[idx], 'IOF Valor'] += rendimentos.iloc[idx]['IOF Valor']
+                rendimentos_totais_neon.loc[rendimentos_totais_neon.index[idx], 'IR Valor'] += rendimentos.iloc[idx]['IR Valor']
+                rendimentos_totais_neon.loc[rendimentos_totais_neon.index[idx], 'Imposto'] += rendimentos.iloc[idx]['Imposto']
+                rendimentos_totais_neon.loc[rendimentos_totais_neon.index[idx], 'Saldo líquido'] += rendimentos.iloc[idx]['Saldo líquido']
+                rendimentos_totais_neon.loc[rendimentos_totais_neon.index[idx], 'Rendimento líquido'] += rendimentos.iloc[idx]['Rendimento líquido']
+
+
         rendimentos_totais_inter = rendimentos_totais_inter[['Data', 'Valor Investido', 'Saldo Bruto', 'Rendimento', 'IOF Valor', 'IR Valor', 'Imposto', 'Saldo líquido', "Rendimento líquido"]]
         rendimentos_totais_nubank = rendimentos_totais_nubank[['Data', 'Valor Investido', 'Saldo Bruto', 'Rendimento', 'IOF Valor', 'IR Valor', 'Imposto', 'Saldo líquido', "Rendimento líquido"]]
+        rendimentos_totais_neon = rendimentos_totais_neon[['Data', 'Valor Investido', 'Saldo Bruto', 'Rendimento', 'IOF Valor', 'IR Valor', 'Imposto', 'Saldo líquido', "Rendimento líquido"]]
 
         rendimentos_totais = rendimentos_totais_inter.copy()
             
@@ -247,6 +280,16 @@ class InvestmentCalculator:
             rendimentos_totais.loc[rendimentos_totais.index[idx], 'Imposto'] += rendimentos_totais_nubank.iloc[idx]['Imposto']
             rendimentos_totais.loc[rendimentos_totais.index[idx], 'Saldo líquido'] += rendimentos_totais_nubank.iloc[idx]['Saldo líquido']
             rendimentos_totais.loc[rendimentos_totais.index[idx], 'Rendimento líquido'] += rendimentos_totais_nubank.iloc[idx]['Rendimento líquido']
+
+
+            rendimentos_totais.loc[rendimentos_totais.index[idx], 'Valor Investido'] += rendimentos_totais_neon.iloc[idx]['Valor Investido']
+            rendimentos_totais.loc[rendimentos_totais.index[idx], 'Saldo Bruto'] += rendimentos_totais_neon.iloc[idx]['Saldo Bruto']
+            rendimentos_totais.loc[rendimentos_totais.index[idx], 'Rendimento'] += rendimentos_totais_neon.iloc[idx]['Rendimento']
+            rendimentos_totais.loc[rendimentos_totais.index[idx], 'IOF Valor'] += rendimentos_totais_neon.iloc[idx]['IOF Valor']
+            rendimentos_totais.loc[rendimentos_totais.index[idx], 'IR Valor'] += rendimentos_totais_neon.iloc[idx]['IR Valor']
+            rendimentos_totais.loc[rendimentos_totais.index[idx], 'Imposto'] += rendimentos_totais_neon.iloc[idx]['Imposto']
+            rendimentos_totais.loc[rendimentos_totais.index[idx], 'Saldo líquido'] += rendimentos_totais_neon.iloc[idx]['Saldo líquido']
+            rendimentos_totais.loc[rendimentos_totais.index[idx], 'Rendimento líquido'] += rendimentos_totais_neon.iloc[idx]['Rendimento líquido']
 
         rendimentos_totais_inter = rendimentos_totais_inter.round({
             'Valor Investido': 2,
@@ -270,6 +313,17 @@ class InvestmentCalculator:
             'Rendimento líquido': 2
         })
 
+        rendimentos_totais_neon = rendimentos_totais_neon.round({
+            'Valor Investido': 2,
+            'Saldo Bruto': 2,
+            'Rendimento': 2,
+            'IOF Valor': 2,
+            'IR Valor': 2,
+            'Imposto': 2,
+            'Saldo líquido': 2,
+            'Rendimento líquido': 2
+        })
+
         rendimentos_totais = rendimentos_totais.round({
             'Valor Investido': 2,
             'Saldo Bruto': 2,
@@ -281,4 +335,4 @@ class InvestmentCalculator:
             'Rendimento líquido': 2
         })
 
-        return rendimentos_totais, rendimentos_totais_inter, rendimentos_totais_nubank
+        return rendimentos_totais, rendimentos_totais_inter, rendimentos_totais_nubank, rendimentos_totais_neon
