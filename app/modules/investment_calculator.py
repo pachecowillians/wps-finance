@@ -61,7 +61,7 @@ class InvestmentCalculator:
 
         return dias_uteis
 
-    def calcular_dias_corridos(self, data_inicio, data_fim, bank, feriado_list):
+    def calcular_dias_corridos(self, data_inicio, data_fim, bank):
         dias_corridos = 0
 
         if data_inicio == data_fim:
@@ -70,16 +70,16 @@ class InvestmentCalculator:
         data_atual = data_inicio
         while data_atual <= data_fim:
             if bank == 'Inter':
-                if data_atual.weekday() in [1, 2, 3, 4] and data_atual.date().strftime("%d/%m/%Y") not in feriado_list:
+                if data_atual.weekday() in [1, 2, 3, 4]:
                     dias_corridos += 1
-                elif data_atual.weekday() == 5 and data_atual.date().strftime("%d/%m/%Y") not in feriado_list:
+                elif data_atual.weekday() == 5:
                     dias_corridos += 3
             else:
-                if data_atual.weekday() in [2, 3, 4, 5] and data_atual.date().strftime("%d/%m/%Y") not in feriado_list:
+                if data_atual.weekday() in [2, 3, 4, 5]:
                     dias_corridos += 1
-                elif data_atual.weekday() == 1 and dias_corridos > 0 and data_atual.date().strftime("%d/%m/%Y") not in feriado_list:
+                elif data_atual.weekday() == 1 and dias_corridos > 0:
                     dias_corridos += 3
-                elif data_atual.weekday() == 1 and data_atual.date().strftime("%d/%m/%Y") not in feriado_list:
+                elif data_atual.weekday() == 1:
                     dias_corridos += 1
             data_atual += timedelta(days=1)
 
@@ -103,7 +103,7 @@ class InvestmentCalculator:
             cdi_list = [self.get_cdi(date, cdi_df) for date in date_list]
 
             util_day_list = [self.calcular_dias_uteis(date_list[0], date, feriado_list) for date in date_list]
-            calendar_day_list = [self.calcular_dias_corridos(date_list[0], date, contribution['Bank'], feriado_list) for date in date_list]
+            calendar_day_list = [self.calcular_dias_corridos(date_list[0], date, contribution['Bank']) for date in date_list]
 
             iof_list = [self.get_iof(day, iof_df) for day in calendar_day_list]
             ir_list = [self.get_ir(day) for day in calendar_day_list]
