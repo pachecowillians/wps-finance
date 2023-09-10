@@ -102,6 +102,9 @@ class InvestmentCalculator:
 
             cdi_list = [self.get_cdi(date, cdi_df) for date in date_list]
 
+            if contribution['Bank'] == 'Neon':
+                cdi_list = [valor * 1.03 for valor in cdi_list]
+
             util_day_list = [self.calcular_dias_uteis(date_list[0], date, feriado_list) for date in date_list]
             calendar_day_list = [self.calcular_dias_corridos(date_list[0], date, contribution['Bank']) for date in date_list]
 
